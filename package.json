@@ -1,0 +1,8 @@
+{
+  "name": "Freenove-Pi-Kit-Nodejs",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/clocktower39/Freenove-Pi-Kit-Nodejs.git",
+  "author": "clocktower39 <clocktower39@aol.com>",
+  "license": "MIT"
+}
