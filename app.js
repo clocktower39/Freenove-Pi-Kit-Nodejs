@@ -4,13 +4,11 @@ const tempSensor = require("node-dht-sensor");
 
 // adjust according to GPIO pins
 const lcd = new LCD(1, 0x27, 16, 2);
-var pir = new gpio(26, 'in', 'both');
-var passiveBeeper = new gpio(23, 'high');
+var motionSensor = new gpio(26, 'in', 'both');
 
 // turn on the LCD then clear the screen
 lcd.beginSync();
 lcd.clearSync();
-
 
 let displayText = (inputText) => {
     if(inputText.length > 32){
@@ -41,27 +39,21 @@ function delay(i,paragraph){
 
         lcd.printLineSync(0, topLine );
         lcd.printLineSync(1, bottomLine );
+
+        // multiple the delay by i so it actually delays
     }, 200*i)
-    // multiple the delay by i so it actually delays
 }
 
 // motion sensor
-pir.watch(function(err, value) {
+motionSensor.watch(function(err, value) {
     // clear previous screen
     lcd.clearSync();
 
     // voltage changes to 1 during motion
     if (value == 1) {
-        displayText(`Motion detected @ ${new Date().toLocaleTimeString()}`);
         sendMessage(`Motion detected @ ${new Date().toLocaleTimeString()}`);
-        // for (var i = 0; i < 50000; i++) {
-        //     setTimeout(()=>{
-        //         passiveBeeper.writeSync(1);
-        //         passiveBeeper.writeSync(0);
-        //     },i*.000000)
-        // };
     }
-    // ~25 seconds back initial voltage
+    // ~10 seconds back initial voltage, 15 more seconds until detection available
     else {
         tempSensor.read(11, 4, function(err, temperature, humidity) {
             if (!err) {
@@ -81,5 +73,6 @@ pir.watch(function(err, value) {
 
 
 function sendMessage(message) {
+    displayText(message);
     console.log(message);
 }
