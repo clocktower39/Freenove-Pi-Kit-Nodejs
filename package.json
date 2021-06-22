@@ -4,5 +4,10 @@
   "main": "index.js",
   "repository": "https://github.com/clocktower39/Freenove-Pi-Kit-Nodejs.git",
   "author": "clocktower39 <clocktower39@aol.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "node-dht-sensor": "^0.4.3",
+    "onoff": "^6.0.3",
+    "raspberrypi-liquid-crystal": "^1.15.0"
+  }
 }
